@@ -1,6 +1,7 @@
 'use strict'
 
 const UserModel = use('App/Models/User')
+const hash = use('Hash')
 
 class UserController {
   async index () {
@@ -17,18 +18,11 @@ class UserController {
     const userData = await UserModel.create({email,username,password})
     return { status: 200, data: userData}
   }
-  async login({request, auth}) {
+  async login({ request, auth }) {
     const { email, password } = request.body
-      try {
-        if (await auth.attempt(email, password)) {
-          let userEmail = await UserModel.find({email})
-          let accessToken = await auth.generate(userEmail)
-          return ({status:200, data: userEmail, token: accessToken})
-        }
-      }
-      catch (err) {
-        return ({message: 'Failed'})
-    }
+    const userData = await UserModel.find({email})
+    const hashPassword = await hash.verify(password, userData.password)
+    return {status:200, data: userData }
   }
 }
 

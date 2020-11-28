@@ -31,6 +31,9 @@ class User extends Model {
    *
    * @return {Object}
    */
+  static get primaryKey() {
+      return 'id'
+  }
   tokens () {
     return this.hasMany('App/Models/Token')
   }
