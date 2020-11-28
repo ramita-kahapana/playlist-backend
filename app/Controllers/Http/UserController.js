@@ -10,7 +10,7 @@ class UserController {
   }
   async show ({ request }) {
     const { id } = request.params;
-    const userData = await UserModel.find
+    const userData = await UserModel.find({id})
     return { status: 200, data: userData}
   }
   async store ({ request }) {
@@ -19,8 +19,8 @@ class UserController {
     return { status: 200, data: userData}
   }
   async login({ request }) {
-    const { email, password } = request.body
-    const userData = await UserModel.find({email})
+    const { username, password } = request.body
+    const userData = await UserModel.find({username})
     const hashPassword = await hash.verify(password, userData.password)
     return {status:200, data: userData }
   }
