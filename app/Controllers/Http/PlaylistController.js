@@ -12,7 +12,14 @@ class PlaylistController {
   async show({ request }) {
     const { id } = request.params
 
-    return {status : 200 ,error : undefined, data :  await Playlist.query().where({playlists_id : id}).fetch().then(response => response.toJSON()) }
+    return {status : 200 ,error : undefined, data :  await Playlist.query().where({user_id: id}).fetch().then(response => response.toJSON()) }
+
+  }
+
+  async showInplaylist({ request }) {
+    const { id } = request.params
+
+    return {status : 200 ,error : undefined, data :  await Playlist.query().where({playlists_id: id}).fetch().then(response => response.toJSON()) }
 
   }
 
