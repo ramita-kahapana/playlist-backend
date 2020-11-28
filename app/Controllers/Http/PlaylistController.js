@@ -4,41 +4,43 @@ const Playlist = use('App/Models/Playlist')
 
 class PlaylistController {
   async index( {request }) {
-    const {references = undefined} = request.qs
 
-    return {status : 200 ,error : undefined,data : Playlist.query().toJSON() }
+    return {status : 200 ,error : undefined, data :  await Playlist.query().fetch().then(response => response.toJSON()) }
 
   }
 
   async show({ request }) {
-    const {id} =request.qs
+    const { id } = request.params
 
-    return {status : 200 ,error : undefined,data : Playlist.query().where({playlists_id : id}).fetch().toJSON() }
+    return {status : 200 ,error : undefined, data :  await Playlist.query().where({playlists_id : id}).fetch().then(response => response.toJSON()) }
 
   }
 
   async store({ request }) {
-    const {playlists_id} =  Playlist.create(request.body)
+    const {playlists_id} = await Playlist.create(request.body)
+    console.log(playlists_id)
 
-    return {status : 200 ,data : Playlist.query().where({playlists_id: playlists_id }).fetch().toJSON() }
+    return {status : 200 ,data : await Playlist.query().where({playlists_id: playlists_id }).fetch().then(response => response.toJSON())}
 
   }
-  async updateById( {request} ) {
-    const {id} = request.qs
+  async update ( {request} ) {
+    const { id } = request.params
+    const {id_song} = request.body
+    console.log(id)
 
     let dataBefore = await Playlist.findBy({playlists_id :id})
 
     if(!dataBefore){
       return {status : 500 ,error : `Not Found ${ id }` , data : undefined};
     }
-    dataBefore.merge(request.body)
+    dataBefore.merge({id_song : id_song})
     await dataBefore.save();
 
-    return {status : 200 ,data : Playlist.query().where({playlists_id: playlists_id }).fetch().toJSON() }
+    return {status : 200 ,data : await  Playlist.query().where({playlists_id: id }).fetch().then(response => response.toJSON())}
 
   }
-  async deletById( {request} ) {
-    const {id} = request.qs
+  async destroy ( {request} ) {
+    const { id } = request.params
 
     let dataBefore = await Playlist.findBy({playlists_id :id})
 
