@@ -34,6 +34,9 @@ class User extends Model {
   tokens () {
     return this.hasMany('App/Models/Token')
   }
+  playlist() {
+    return this.hasMany('App/Models/Client')
+  }
 }
 
 module.exports = User
