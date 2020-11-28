@@ -21,4 +21,5 @@ Route.get('/', () => {
 })
 Route.group(() => {
     Route.resource("/users", "UserController")
+    Route.resource("/playlists", "PlaylistController")
 }).prefix("api/v1")
