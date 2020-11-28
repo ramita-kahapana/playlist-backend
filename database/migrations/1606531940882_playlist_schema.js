@@ -8,6 +8,7 @@ class PlaylistSchema extends Schema {
     this.create('playlists', (table) => {
       table.increments('playlists_id')
       table.string('id_song',255).notNullable()
+      table.string('name',255).notNullable()
       table.integer('user_id',200).unsigned()
       table.timestamps()
 
