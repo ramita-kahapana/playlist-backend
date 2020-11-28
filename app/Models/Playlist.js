@@ -8,11 +8,11 @@ class Playlist extends Model {
     return 'playlists_id'
 }
 static get createdAtColumn() {
-    return 'created_at';
+    return new Date(); //format date
 
 }
 static get updatedAtColumn(){
-    return 'updated_at';
+    return new Date(); //format date
 }
 user(){
     return this.belongsTo('App/Models/User')
