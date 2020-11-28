@@ -35,7 +35,7 @@ class User extends Model {
     return this.hasMany('App/Models/Token')
   }
   playlist() {
-    return this.hasMany('App/Models/Client')
+    return this.hasMany('App/Models/Playlist')
   }
 }
 
