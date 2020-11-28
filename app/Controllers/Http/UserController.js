@@ -18,7 +18,7 @@ class UserController {
     const userData = await UserModel.create({email,username,password})
     return { status: 200, data: userData}
   }
-  async login({ request, auth }) {
+  async login({ request }) {
     const { email, password } = request.body
     const userData = await UserModel.find({email})
     const hashPassword = await hash.verify(password, userData.password)
